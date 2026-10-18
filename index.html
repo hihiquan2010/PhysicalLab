@@ -1,0 +1,395 @@
+<!doctype html>
+<html lang="vi">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Physics Simulation Hub - Kho Tàng Mô Phỏng Vật Lý</title>
+
+    <!-- Nhúng Font chữ Google (Roboto và Montserrat) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;800&family=Roboto:wght@300;400;500&display=swap"
+      rel="stylesheet"
+    />
+
+    <!-- Nhúng FontAwesome để lấy Icon -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+
+    <style>
+      /* =========================================
+           BIẾN CSS & RESET CƠ BẢN
+           ========================================= */
+      :root {
+        --bg-dark: #0f172a;
+        --bg-card: rgba(30, 41, 59, 0.7);
+        --text-main: #f8fafc;
+        --text-muted: #94a3b8;
+        --primary: #3b82f6;
+        --primary-hover: #2563eb;
+        --accent: #8b5cf6;
+        --border-color: rgba(255, 255, 255, 0.1);
+      }
+
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family: "Roboto", sans-serif;
+        background-color: var(--bg-dark);
+        color: var(--text-main);
+        line-height: 1.6;
+        /* Tạo hiệu ứng nền lưới mờ ảo */
+        background-image:
+          radial-gradient(
+            circle at 15% 50%,
+            rgba(59, 130, 246, 0.15),
+            transparent 25%
+          ),
+          radial-gradient(
+            circle at 85% 30%,
+            rgba(139, 92, 246, 0.15),
+            transparent 25%
+          );
+        min-height: 100vh;
+      }
+
+      /* =========================================
+           NAVBAR (THANH ĐIỀU HƯỚNG)
+           ========================================= */
+      nav {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 20px 5%;
+        background: rgba(15, 23, 42, 0.8);
+        backdrop-filter: blur(10px);
+        position: sticky;
+        top: 0;
+        z-index: 100;
+        border-bottom: 1px solid var(--border-color);
+      }
+
+      .logo {
+        font-family: "Montserrat", sans-serif;
+        font-size: 1.5rem;
+        font-weight: 800;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        color: var(--text-main);
+        text-decoration: none;
+      }
+
+      .logo i {
+        color: var(--primary);
+        font-size: 1.8rem;
+      }
+
+      .nav-links a {
+        color: var(--text-muted);
+        text-decoration: none;
+        margin-left: 30px;
+        font-weight: 500;
+        transition: color 0.3s;
+      }
+
+      .nav-links a:hover {
+        color: var(--primary);
+      }
+
+      /* =========================================
+           HERO SECTION (PHẦN GIỚI THIỆU ĐẦU TRANG)
+           ========================================= */
+      header {
+        text-align: center;
+        padding: 80px 20px 60px;
+      }
+
+      header h1 {
+        font-family: "Montserrat", sans-serif;
+        font-size: 3rem;
+        font-weight: 800;
+        margin-bottom: 20px;
+        background: linear-gradient(135deg, #60a5fa, #c084fc);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+      }
+
+      header p {
+        font-size: 1.2rem;
+        color: var(--text-muted);
+        max-width: 600px;
+        margin: 0 auto;
+      }
+
+      /* =========================================
+           GRID LAYOUT (BỐ CỤC LƯỚI CÁC BÀI HỌC)
+           ========================================= */
+      .container {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 0 20px 80px;
+      }
+
+      .grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+        gap: 30px;
+        margin-top: 40px;
+      }
+
+      /* =========================================
+           CARD (THẺ BÀI HỌC)
+           ========================================= */
+      .card {
+        background: var(--bg-card);
+        border: 1px solid var(--border-color);
+        border-radius: 16px;
+        padding: 30px;
+        display: flex;
+        flex-direction: column;
+        text-decoration: none;
+        color: inherit;
+        transition: all 0.3s ease;
+        position: relative;
+        overflow: hidden;
+        backdrop-filter: blur(10px);
+      }
+
+      /* Hiệu ứng viền sáng khi hover */
+      .card::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(
+          45deg,
+          transparent,
+          rgba(255, 255, 255, 0.05),
+          transparent
+        );
+        transform: translateX(-100%);
+        transition: transform 0.5s;
+      }
+
+      .card:hover {
+        transform: translateY(-5px);
+        border-color: rgba(59, 130, 246, 0.5);
+        box-shadow:
+          0 10px 30px rgba(0, 0, 0, 0.5),
+          0 0 20px rgba(59, 130, 246, 0.1);
+      }
+
+      .card:hover::before {
+        transform: translateX(100%);
+      }
+
+      .card-icon {
+        width: 50px;
+        height: 50px;
+        border-radius: 12px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1.5rem;
+        margin-bottom: 20px;
+      }
+
+      /* Màu sắc riêng cho từng icon bài học */
+      .icon-b1 {
+        background: rgba(59, 130, 246, 0.2);
+        color: #60a5fa;
+      }
+      .icon-b6 {
+        background: rgba(239, 68, 68, 0.2);
+        color: #f87171;
+      }
+      .icon-b7 {
+        background: rgba(16, 185, 129, 0.2);
+        color: #34d399;
+      }
+      .icon-b8 {
+        background: rgba(139, 92, 246, 0.2);
+        color: #a78bfa;
+      }
+
+      .card h3 {
+        font-family: "Montserrat", sans-serif;
+        font-size: 1.3rem;
+        margin-bottom: 10px;
+      }
+
+      .card p {
+        color: var(--text-muted);
+        font-size: 0.95rem;
+        margin-bottom: 20px;
+        flex-grow: 1; /* Đẩy nút xuống đáy */
+      }
+
+      .card-btn {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        color: var(--primary);
+        font-weight: 500;
+        font-size: 0.9rem;
+        margin-top: auto;
+      }
+
+      .card-btn i {
+        transition: transform 0.3s;
+      }
+
+      .card:hover .card-btn i {
+        transform: translateX(5px);
+      }
+
+      /* =========================================
+           FOOTER
+           ========================================= */
+      footer {
+        text-align: center;
+        padding: 30px;
+        color: var(--text-muted);
+        border-top: 1px solid var(--border-color);
+        font-size: 0.9rem;
+      }
+
+      /* Responsive cho điện thoại */
+      @media (max-width: 768px) {
+        header h1 {
+          font-size: 2rem;
+        }
+        .nav-links {
+          display: none;
+        } /* Ẩn menu trên mobile để đơn giản hóa */
+      }
+    </style>
+  </head>
+  <body>
+    <!-- THANH ĐIỀU HƯỚNG -->
+    <nav>
+      <a href="index.html" class="logo">
+        <i class="fa-solid fa-atom"></i>
+        Physics SimHub
+      </a>
+      <div class="nav-links">
+        <a href="#">Trang Chủ</a>
+        <a href="#">Tài Liệu Lý Thuyết</a>
+        <a href="#">Về Tác Giả</a>
+      </div>
+    </nav>
+
+    <!-- PHẦN GIỚI THIỆU -->
+    <header>
+      <h1>Khám Phá Vật Lý Số</h1>
+      <p>
+        Trải nghiệm các thí nghiệm Vật lý trực quan, sinh động và chính xác. Nơi
+        các định luật khô khan trở nên sống động qua từng chuyển động.
+      </p>
+    </header>
+
+    <!-- KHU VỰC CHỨA CÁC BÀI HỌC -->
+    <div class="container">
+      <div class="grid">
+        <!-- Bài 1 -->
+        <a href="./simulations/bai1.html" class="card">
+          <div class="card-icon icon-b1">
+            <i class="fa-solid fa-wave-square"></i>
+          </div>
+          <h3>Bài 1: Dao động điều hòa</h3>
+          <p>
+            Mô phỏng con lắc lò xo và con lắc đơn. Quan sát sự biến thiên của li
+            độ, vận tốc và gia tốc theo thời gian.
+          </p>
+          <div class="card-btn">
+            Vào mô phỏng <i class="fa-solid fa-arrow-right"></i>
+          </div>
+        </a>
+
+        <!-- Bài 6 -->
+        <a href="./simulations/bai6.html" class="card">
+          <div class="card-icon icon-b6">
+            <i class="fa-solid fa-chart-line"></i>
+          </div>
+          <h3>Bài 6: Dao động tắt dần</h3>
+          <p>
+            Tìm hiểu nguyên nhân làm biên độ dao động giảm dần theo thời gian do
+            tác dụng của lực ma sát và lực cản.
+          </p>
+          <div class="card-btn">
+            Vào mô phỏng <i class="fa-solid fa-arrow-right"></i>
+          </div>
+        </a>
+
+        <!-- Bài 7 -->
+        <a href="./simulations/bai7.html" class="card">
+          <div class="card-icon icon-b7">
+            <i class="fa-solid fa-chart-area"></i>
+          </div>
+          <h3>Bài 7: Hiện tượng cộng hưởng</h3>
+          <p>
+            Khám phá đường cong cộng hưởng khi tần số ngoại lực bằng tần số
+            riêng của hệ dao động. Ứng dụng và tác hại.
+          </p>
+          <div class="card-btn">
+            Vào mô phỏng <i class="fa-solid fa-arrow-right"></i>
+          </div>
+        </a>
+
+        <!-- Bài 8 -->
+        <a href="./simulations/bai8.html" class="card">
+          <div class="card-icon icon-b8">
+            <i class="fa-solid fa-water"></i>
+          </div>
+          <h3>Bài 8: Mô tả sóng</h3>
+          <p>
+            Quan sát quá trình truyền sóng mặt nước. Phân biệt giữa sự lan
+            truyền năng lượng và chuyển động của phần tử môi trường.
+          </p>
+          <div class="card-btn">
+            Vào mô phỏng <i class="fa-solid fa-arrow-right"></i>
+          </div>
+        </a>
+
+        <!-- Khối Placeholder cho các bài tiếp theo (Đang phát triển) -->
+        <div
+          class="card"
+          style="opacity: 0.6; cursor: not-allowed; border-style: dashed"
+        >
+          <div
+            class="card-icon"
+            style="
+              background: rgba(255, 255, 255, 0.05);
+              color: var(--text-muted);
+            "
+          >
+            <i class="fa-solid fa-code"></i>
+          </div>
+          <h3>Bài tiếp theo...</h3>
+          <p>
+            Chúng tôi đang cập nhật thêm các thí nghiệm mới. Vui lòng quay lại
+            sau.
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <!-- CHÂN TRANG -->
+    <footer>
+      <p>
+        &copy; 2024 Physics Simulation Hub. Thiết kế bởi Fullstack Developer.
+        Dành cho mục đích giáo dục.
+      </p>
+    </footer>
+  </body>
+</html>

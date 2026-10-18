@@ -1,0 +1,60 @@
+<!doctype html>
+<html lang="vi">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Bài 6: Dao động tắt dần</title>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+    <link rel="stylesheet" href="../assets/css/style.css" />
+  </head>
+  <body>
+    <div id="sidebar">
+      <a href="../index.html" class="btn-back"
+        ><i class="fa-solid fa-arrow-left"></i> Trở về Trang Chủ</a
+      >
+      <h2>Bài 6: Dao động tắt dần</h2>
+      <div class="instructions">
+        <strong>Hướng dẫn:</strong><br />
+        Quan sát biên độ dao động giảm dần do lực ma sát. Thay đổi hệ số ma sát
+        (\(\mu\)) để thấy vật dừng lại nhanh hay chậm.
+      </div>
+      <div class="control-group">
+        <label>Hệ số ma sát (μ): <span id="valMu">0.05</span></label>
+        <input
+          type="range"
+          id="sliderMu"
+          min="0.01"
+          max="0.2"
+          step="0.01"
+          value="0.05"
+        />
+      </div>
+      <button class="btn-action" id="btn-reset">Khởi động lại</button>
+    </div>
+    <div id="main-content">
+      <div id="canvas-wrapper">
+        <canvas id="simCanvas"></canvas>
+      </div>
+      <div id="info-panel">
+        <div class="hud-item">
+          <span class="hud-label">Thời gian (t)</span
+          ><span id="out-t" class="hud-value val-t">0.00 s</span>
+        </div>
+        <div class="hud-item">
+          <span class="hud-label">Li độ (x)</span
+          ><span id="out-x" class="hud-value val-x">0.00 m</span>
+        </div>
+        <div class="hud-item">
+          <span class="hud-label">Trạng thái</span
+          ><span id="out-status" class="hud-value" style="color: #64748b"
+            >Đang dao động</span
+          >
+        </div>
+      </div>
+    </div>
+    <script src="../js/sim6.js"></script>
+  </body>
+</html>

@@ -1,0 +1,54 @@
+<!doctype html>
+<html lang="vi">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Bài 8: Mô tả sóng</title>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+    <link rel="stylesheet" href="../assets/css/style.css" />
+  </head>
+  <body>
+    <div id="sidebar">
+      <a href="../index.html" class="btn-back"
+        ><i class="fa-solid fa-arrow-left"></i> Trở về Trang Chủ</a
+      >
+      <h2>Bài 8: Mô tả sóng</h2>
+      <div class="instructions">
+        <strong>Hướng dẫn:</strong><br />
+        Quan sát sóng lan truyền trên mặt nước. Chú ý miếng xốp màu cam chỉ dao
+        động tại chỗ (lên xuống), không bị trôi theo sóng.
+      </div>
+      <div class="control-group">
+        <label>Tần số sóng (f): <span id="val-f">1.5 Hz</span></label>
+        <input
+          type="range"
+          id="slider-f"
+          min="0.5"
+          max="3.0"
+          step="0.1"
+          value="1.5"
+        />
+      </div>
+      <div class="control-group">
+        <label>Biên độ sóng (A): <span id="val-a">1.0</span></label>
+        <input
+          type="range"
+          id="slider-a"
+          min="0.5"
+          max="2.0"
+          step="0.1"
+          value="1.0"
+        />
+      </div>
+    </div>
+    <div id="main-content">
+      <div id="canvas-wrapper">
+        <canvas id="simCanvas"></canvas>
+      </div>
+    </div>
+    <script src="../js/sim8.js"></script>
+  </body>
+</html>

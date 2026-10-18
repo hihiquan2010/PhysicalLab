@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="vi">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Bài 1: Dao động điều hòa</title>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+    <link rel="stylesheet" href="../assets/css/style.css" />
+    <script
+      id="MathJax-script"
+      async
+      src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"
+    ></script>
+  </head>
+  <body>
+    <div id="sidebar">
+      <a href="../index.html" class="btn-back"
+        ><i class="fa-solid fa-arrow-left"></i> Trở về Trang Chủ</a
+      >
+      <h2>Bài 1: Dao động điều hòa</h2>
+      <div class="instructions">
+        <strong>Hướng dẫn:</strong><br />
+        Kéo thanh trượt để thay đổi Biên độ (A) và Tần số góc (\(\omega\)). Quan
+        sát sự thay đổi của con lắc và đồ thị li độ \(x(t)\) ở phía dưới.
+      </div>
+      <div class="control-group">
+        <label>Biên độ (A): <span id="valA">100</span> px</label>
+        <input type="range" id="sliderA" min="20" max="200" value="100" />
+      </div>
+      <div class="control-group">
+        <label>Tần số góc (ω): <span id="valW">2.0</span> rad/s</label>
+        <input
+          type="range"
+          id="sliderW"
+          min="0.5"
+          max="5"
+          step="0.1"
+          value="2"
+        />
+      </div>
+    </div>
+    <div id="main-content">
+      <div id="canvas-wrapper">
+        <canvas id="simCanvas"></canvas>
+      </div>
+      <div id="info-panel">
+        <div class="hud-item">
+          <span class="hud-label">Thời gian (t)</span
+          ><span id="out-t" class="hud-value val-t">0.00 s</span>
+        </div>
+        <div class="hud-item">
+          <span class="hud-label">Li độ (x)</span
+          ><span id="out-x" class="hud-value val-x">0.00 m</span>
+        </div>
+        <div class="hud-item">
+          <span class="hud-label">Vận tốc (v)</span
+          ><span id="out-v" class="hud-value val-v">0.00 m/s</span>
+        </div>
+        <div class="hud-item">
+          <span class="hud-label">Gia tốc (a)</span
+          ><span id="out-a" class="hud-value val-a">0.00 m/s²</span>
+        </div>
+      </div>
+    </div>
+    <script src="../js/sim1.js"></script>
+  </body>
+</html>
